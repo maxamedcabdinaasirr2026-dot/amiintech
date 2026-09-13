@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AmiinTech - Learn English</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #050b1a, #0b1d3a, #1a365d);
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 30px;
+            margin: 0;
+            height: 100vh;
+            overflow: auto;
+        }
+        body::before {
+            content: "✦   ⋆   .   ★  ⚡  .   ✦   ⋆   ★  ⚡  .   ✦";
+            position: fixed;
+            top: 10px;
+            left: 0;
+            width: 100%;
+            font-size: 20px;
+            color: #00ffff;
+            white-space: nowrap;
+            animation: moveSpace 5s linear infinite;
+            text-shadow: 0 0 10px #00ffff;
+        }
+        @keyframes moveSpace {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        h1 { color: #00ffff; text-shadow: 0 0 10px #00ffff; }
+        .box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 10px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+            width: 320px;
+        }
+        input {
+            padding: 10px;
+            margin: 8px 0;
+            width: 90%;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            padding: 10px 15px;
+            background: #00ffff;
+            color: #000;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 95%;
+            margin-top: 5px;
+        }
+        button:hover { background: #ff00ff; color: #fff; }
+        .link-text {
+            color: #00ffff;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 10px;
+            display: inline-block;
+            text-decoration: underline;
+        }
+        .error-msg { color: #ff4d4d; font-size: 13px; margin-top: 5px; }
+        #welcome-section { display: none; margin-top: 20px; }
+        .lesson-card {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            margin: 10px auto;
+            border-radius: 8px;
+            width: 60%;
+            border: 1px solid #00ffff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIGN IN SECTION (English) -->
+    <div id="login-section">
+        <h1>Welcome to AmiinTech</h1>
+        <p>Secure English Learning Platform</p>
+
+        <div class="box">
+            <h3>Google Sign In</h3>
+            <input type="email" id="gmail" placeholder="Enter your Gmail (e.g. user@gmail.com)"><br>
+            <input type="password" id="gpass" placeholder="Enter Google Password"><br>
+            <button onclick="handleGoogleAuth()">Sign In with Google</button>
+            <div id="error" class="error-msg"></div>
+            <span class="link-text" onclick="forgotPassword()">Forgot Password?</span>
+        </div>
+    </div>
+
+    <!-- LEARNING SECTION (English with Somali Translation) -->
+    <div id="welcome-section">
+        <h1>🎉 Welcome to AmiinTech Learning Dashboard</h1>
+        <p id="user-greeting" style="color: #00ffff; font-size: 18px;"></p>
+        
+        <h3>Today's English Vocabulary (Turjumaadda Soomaali):</h3>
+        
+        <div class="lesson-card">
+            <strong>1. Hello</strong> &rarr; Salaan (Macsalaameyn/Hayaan)
+        </div>
+        <div class="lesson-card">
+            <strong>2. Welcome</strong> &rarr; Soo dhowoow
+        </div>
+        <div class="lesson-card">
+            <strong>3. Education is the key to success</strong> &rarr; Waxbarashadu waa furaha guusha
+        </div>
+    </div>
+
+    <script>
+        // Xogta saxda ah ee tijaabada
+        var validEmail = "amiintech@gmail.com";
+        var validPass = "amiin2026";
+
+        function handleGoogleAuth() {
+            var emailInput = document.getElementById("gmail").value.trim();
+            var passInput = document.getElementById("gpass").value.trim();
+            var errorDiv = document.getElementById("error");
+
+            if (emailInput === "" || passInput === "") {
+                errorDiv.innerText = "Error: Please fill in all fields!";
+                return;
+            }
+
+            if (!emailInput.endsWith("@gmail.com")) {
+                errorDiv.innerText = "Error: Invalid Gmail address format!";
+                return;
+            }
+
+            if (emailInput === validEmail && passInput === validPass) {
+                document.getElementById("login-section").style.display = "none";
+                document.getElementById("welcome-section").style.display = "block";
+                document.getElementById("user-greeting").innerText = "Successfully logged in as: " + emailInput;
+            } else {
+                errorDiv.innerText = "Error: Incorrect Gmail or Password!";
+            }
+        }
+
+        function forgotPassword() {
+            var userEmail = prompt("Enter your registered Gmail to reset password:");
+            
+            if (userEmail === null || userEmail === "") {
+                return;
+            }
+
+            if (userEmail === validEmail) {
+                var code = Math.floor(1000 + Math.random() * 9000);
+                alert("A verification code (" + code + ") has been sent to " + userEmail + ".");
+                
+                var userCode = prompt("Enter the 4-digit code received on your email:");
+                if (userCode == code) {
+                    var newPassword = prompt("Enter your new Google Password:");
+                    if (newPassword) {
+                        validPass = newPassword;
+                        alert("Success! Your password has been updated securely.");
+                    }
+                } else {
+                    alert("Error: Incorrect verification code!");
+                }
+            } else {
+                alert("Error: This Gmail address is not registered in AmiinTech!");
+            }
+        }
+    </script>
+
+</body>
